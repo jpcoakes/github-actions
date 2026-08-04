@@ -28,15 +28,18 @@ jobs:
           sf plugins install code-analyzer@latest
 
       - name: 'Run Code Analyzer scan'
+        id: code-analyzer
         run: |
-          sf code-analyzer run --workspace force-app/ --output-file code-analyzer-results.html --severity-threshold 3
+          sf code-analyzer run --workspace force-app/ --output-file code-analyzer-results.csv --view detail --severity-threshold 3
 
-      - name: 'Upload Code Analyzer results'
+      - name: 'Publish Code Analyzer results to job summary'
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: code-analyzer-results
-          path: code-analyzer-results.html
+        run: |
+          echo '## Code Analyzer Results' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '```csv' >> "$GITHUB_STEP_SUMMARY"
+          cat code-analyzer-results.csv >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - name: 'Validate'
         run: |
