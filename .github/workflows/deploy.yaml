@@ -1,0 +1,27 @@
+name: Deploy to org
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'force-app/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/cli:latest-slim
+    steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 'Authenticate using SFDX_AUTH_URL'
+        run: |
+          echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url -s -u
+
+      - name: 'Deploy'
+        run: |
+          sf project deploy start -d force-app/ -l RunLocalTests -w 30
