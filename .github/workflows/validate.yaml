@@ -32,15 +32,6 @@ jobs:
         run: |
           sf code-analyzer run --workspace force-app/ --output-file code-analyzer-results.csv --view detail --severity-threshold 3
 
-      - name: 'Publish Code Analyzer results to job summary'
-        if: always()
-        run: |
-          echo '## Code Analyzer Results' >> "$GITHUB_STEP_SUMMARY"
-          echo '' >> "$GITHUB_STEP_SUMMARY"
-          echo '```csv' >> "$GITHUB_STEP_SUMMARY"
-          cat code-analyzer-results.csv >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-
       - name: 'Validate'
         run: |
           sf project deploy validate -d force-app/ -l RunLocalTests -w 30
