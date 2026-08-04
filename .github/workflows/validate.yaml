@@ -20,8 +20,23 @@ jobs:
           fetch-depth: 0
       
       - name: 'Authenticate using SFDX_AUTH_URL'
-        run: | 
+        run: |
           echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url -s -u
+
+      - name: 'Install Salesforce Code Analyzer'
+        run: |
+          sf plugins install code-analyzer@latest
+
+      - name: 'Run Code Analyzer scan'
+        run: |
+          sf code-analyzer run --workspace force-app/ --output-file code-analyzer-results.html --severity-threshold 3
+
+      - name: 'Upload Code Analyzer results'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-analyzer-results
+          path: code-analyzer-results.html
 
       - name: 'Validate'
         run: |
