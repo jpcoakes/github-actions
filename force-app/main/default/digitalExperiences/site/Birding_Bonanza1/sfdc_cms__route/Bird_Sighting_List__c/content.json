@@ -1,0 +1,12 @@
+{
+  "type" : "sfdc_cms__route",
+  "title" : "Bird Sighting List",
+  "contentBody" : {
+    "activeViewId" : "Bird_Sighting_List",
+    "configurationTags" : [ ],
+    "pageAccess" : "UseParent",
+    "routeType" : "list-Bird_Sighting__c",
+    "urlPrefix" : "bird-sighting"
+  },
+  "urlName" : "bird-sighting-list"
+}

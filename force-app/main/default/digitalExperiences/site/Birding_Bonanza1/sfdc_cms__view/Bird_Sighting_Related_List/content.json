@@ -1,0 +1,58 @@
+{
+  "type" : "sfdc_cms__view",
+  "title" : "Bird Sighting Related List",
+  "contentBody" : {
+    "component" : {
+      "children" : [ {
+        "children" : [ {
+          "attributes" : {
+            "backgroundImageConfig" : "",
+            "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "componentSpacerSize" : "",
+            "layoutDirectionDesktop" : "row",
+            "layoutDirectionMobile" : "column",
+            "layoutDirectionTablet" : "column",
+            "maxContentWidth" : "",
+            "sectionColumnGutterWidth" : "",
+            "sectionConfig" : "{\"UUID\":\"ad3730c8-4b52-4cdb-863a-15642f10a20c\",\"columns\":[{\"UUID\":\"8c83ddde-3154-4fd0-be2a-b78401f929cb\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":[]}]}",
+            "sectionMinHeight" : "",
+            "sectionVerticalAlign" : "flex-start"
+          },
+          "children" : [ {
+            "id" : "8c83ddde-3154-4fd0-be2a-b78401f929cb",
+            "name" : "col1",
+            "title" : "Column 1",
+            "type" : "region"
+          } ],
+          "definition" : "community_layout:section",
+          "id" : "ad3730c8-4b52-4cdb-863a-15642f10a20c",
+          "type" : "component"
+        } ],
+        "id" : "b9b731cb-e1f9-469a-9224-d7a592230cb3",
+        "name" : "content",
+        "title" : "Content",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : {
+            "recordId" : "{!recordId}"
+          },
+          "definition" : "community_builder:seoAssistant",
+          "id" : "6cfa59b5-700e-4767-b7cd-697262b219d9",
+          "type" : "component"
+        } ],
+        "id" : "f68bf55e-7f5a-4d9c-a2b7-e49ac8d59bbb",
+        "name" : "sfdcHiddenRegion",
+        "title" : "sfdcHiddenRegion",
+        "type" : "region"
+      } ],
+      "definition" : "community_layout:sldsFlexibleLayout",
+      "id" : "7ff5737f-b527-4fd3-97fa-37074c3de6b6",
+      "type" : "component"
+    },
+    "dataProviders" : [ ],
+    "themeLayoutType" : "Inner",
+    "viewType" : "relatedlist-Bird_Sighting__c"
+  },
+  "urlName" : "bird-sighting-related-list"
+}

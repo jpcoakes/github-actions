@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "a01000000000001AAA",
+    "Name": "SIGHT-0001",
+    "Sighting_Date__c": "2026-08-20",
+    "Quantity_Observed__c": 3,
+    "Weather_Conditions__c": "Sunny",
+    "Verified__c": true,
+    "Notes__c": "Seen near the reeds at dawn.",
+    "Bird_Species__r": {
+      "Name": "Northern Cardinal",
+      "Scientific_Name__c": "Cardinalis cardinalis"
+    },
+    "Birding_Location__r": {
+      "Name": "Willow Creek Marsh",
+      "Region__c": "Midwest",
+      "Country__c": "USA"
+    }
+  },
+  {
+    "Id": "a01000000000002AAA",
+    "Name": "SIGHT-0002",
+    "Sighting_Date__c": "2026-08-18",
+    "Quantity_Observed__c": 1,
+    "Weather_Conditions__c": "Cloudy",
+    "Verified__c": false,
+    "Notes__c": null,
+    "Bird_Species__r": {
+      "Name": "Blue Jay",
+      "Scientific_Name__c": "Cyanocitta cristata"
+    },
+    "Birding_Location__r": {
+      "Name": "Pine Ridge Trail",
+      "Region__c": "Northeast",
+      "Country__c": "USA"
+    }
+  }
+]

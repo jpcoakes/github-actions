@@ -1,0 +1,5 @@
+{
+  "apiName" : "Bird_Sighting_Related_List",
+  "type" : "sfdc_cms__view",
+  "path" : "views"
+}
