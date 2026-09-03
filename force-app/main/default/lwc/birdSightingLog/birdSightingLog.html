@@ -1,0 +1,117 @@
+<template>
+  <lightning-card title="Bird Sightings" icon-name="custom:custom63">
+    <div slot="actions">
+      <lightning-button
+        label={toggleButtonLabel}
+        variant={toggleButtonVariant}
+        onclick={handleToggleForm}
+      ></lightning-button>
+    </div>
+
+    <div class="slds-p-horizontal_medium">
+      <template if:true={showForm}>
+        <div class="slds-box slds-m-bottom_medium">
+          <lightning-record-edit-form
+            object-api-name={objectApiName}
+            onsuccess={handleSuccess}
+            onerror={handleError}
+          >
+            <lightning-messages></lightning-messages>
+            <lightning-input-field
+              field-name="Bird_Species__c"
+            ></lightning-input-field>
+            <lightning-input-field
+              field-name="Birding_Location__c"
+            ></lightning-input-field>
+            <lightning-input-field
+              field-name="Sighting_Date__c"
+            ></lightning-input-field>
+            <lightning-input-field
+              field-name="Quantity_Observed__c"
+            ></lightning-input-field>
+            <lightning-input-field
+              field-name="Weather_Conditions__c"
+            ></lightning-input-field>
+            <lightning-input-field
+              field-name="Notes__c"
+            ></lightning-input-field>
+            <div class="slds-m-top_medium">
+              <lightning-button
+                type="submit"
+                variant="brand"
+                label="Submit Sighting"
+              ></lightning-button>
+            </div>
+          </lightning-record-edit-form>
+        </div>
+      </template>
+
+      <template if:true={hasSightings}>
+        <ul class="slds-has-dividers_around-space sighting-list">
+          <template for:each={sightings} for:item="sighting">
+            <li key={sighting.Id} class="slds-item">
+              <div class="slds-grid slds-wrap slds-p-around_small sighting-row">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                  <p class="slds-text-heading_small">{sighting.speciesName}</p>
+                  <p
+                    class="slds-text-body_small slds-text-color_weak scientific-name"
+                  >
+                    {sighting.scientificName}
+                  </p>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                  <p>{sighting.locationName}</p>
+                  <p class="slds-text-body_small slds-text-color_weak">
+                    {sighting.locationSummary}
+                  </p>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-6">
+                  <p class="slds-text-body_small slds-text-color_weak">Date</p>
+                  <lightning-formatted-date-time
+                    value={sighting.Sighting_Date__c}
+                  ></lightning-formatted-date-time>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-6">
+                  <p class="slds-text-body_small slds-text-color_weak">
+                    Quantity
+                  </p>
+                  <p>{sighting.Quantity_Observed__c}</p>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-6">
+                  <p class="slds-text-body_small slds-text-color_weak">
+                    Weather
+                  </p>
+                  <p>{sighting.Weather_Conditions__c}</p>
+                </div>
+                <div
+                  class="slds-col slds-size_1-of-2 slds-medium-size_1-of-12 slds-text-align_center"
+                >
+                  <template if:true={sighting.Verified__c}>
+                    <lightning-icon
+                      icon-name="utility:check"
+                      variant="success"
+                      size="x-small"
+                      title="Verified"
+                    ></lightning-icon>
+                  </template>
+                </div>
+                <template if:true={sighting.Notes__c}>
+                  <div class="slds-col slds-size_1-of-1 slds-m-top_x-small">
+                    <p class="slds-text-body_small slds-text-color_weak">
+                      {sighting.Notes__c}
+                    </p>
+                  </div>
+                </template>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </template>
+      <template if:false={hasSightings}>
+        <p class="empty-state slds-text-color_weak slds-p-vertical_medium">
+          No sightings logged yet. Be the first to report one!
+        </p>
+      </template>
+    </div>
+  </lightning-card>
+</template>
