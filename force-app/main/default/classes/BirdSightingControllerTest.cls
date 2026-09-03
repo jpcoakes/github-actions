@@ -27,15 +27,34 @@ private class BirdSightingControllerTest {
       Weather_Conditions__c = 'Sunny',
       Notes__c = 'Seen near the reeds at dawn.'
     );
+
+    // BirdSightingController's SOQL uses WITH SECURITY_ENFORCED, so the running
+    // user needs FLS on the fields it selects. New orgs don't grant that
+    // automatically, so grant it here via the same permission set real users
+    // get, rather than assuming profile-level access.
+    PermissionSet birdWatchAdmin = [
+      SELECT Id
+      FROM PermissionSet
+      WHERE Name = 'Bird_Watch_Admin'
+      LIMIT 1
+    ];
+    insert new PermissionSetAssignment(
+      AssigneeId = UserInfo.getUserId(),
+      PermissionSetId = birdWatchAdmin.Id
+    );
   }
 
   @isTest
   static void testGetRecentSightingsReturnsRecordsWithRelatedData() {
-    Test.startTest();
-    List<Bird_Sighting__c> results = BirdSightingController.getRecentSightings(
-      10
-    );
-    Test.stopTest();
+    List<Bird_Sighting__c> results;
+    // System.runAs, even for the same running user, forces Salesforce to
+    // recompute field-level security for this transaction so the permission
+    // set assigned in setupData() takes effect before the query runs.
+    System.runAs(currentTestUser()) {
+      Test.startTest();
+      results = BirdSightingController.getRecentSightings(10);
+      Test.stopTest();
+    }
 
     Assert.areEqual(1, results.size(), 'Expected one sighting to be returned');
     Assert.areEqual('Northern Cardinal', results[0].Bird_Species__r.Name);
@@ -44,14 +63,14 @@ private class BirdSightingControllerTest {
 
   @isTest
   static void testGetRecentSightingsDefaultsLimitWhenNullOrInvalid() {
-    Test.startTest();
-    List<Bird_Sighting__c> resultsNull = BirdSightingController.getRecentSightings(
-      null
-    );
-    List<Bird_Sighting__c> resultsNegative = BirdSightingController.getRecentSightings(
-      -5
-    );
-    Test.stopTest();
+    List<Bird_Sighting__c> resultsNull;
+    List<Bird_Sighting__c> resultsNegative;
+    System.runAs(currentTestUser()) {
+      Test.startTest();
+      resultsNull = BirdSightingController.getRecentSightings(null);
+      resultsNegative = BirdSightingController.getRecentSightings(-5);
+      Test.stopTest();
+    }
 
     Assert.areEqual(
       1,
@@ -63,5 +82,9 @@ private class BirdSightingControllerTest {
       resultsNegative.size(),
       'Non-positive limit should fall back to the default'
     );
+  }
+
+  private static User currentTestUser() {
+    return [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
   }
 }
