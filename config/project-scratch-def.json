@@ -11,11 +11,9 @@
     },
     "communitiesSettings": {
       "enableNetworksEnabled": true
-    }
-  },
-  "securitySettings": {
-    "sessionSettings": {
-      "canLogInAsAnyUser": true
+    },
+    "securitySettings": {
+      "enableAdminLoginAsAnyUser": true
     }
   }
 }
